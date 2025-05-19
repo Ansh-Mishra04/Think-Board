@@ -84,7 +84,7 @@ const Document = ({
       data: editorData,
       tools: {
         header: {
-          class: Header,
+          class: Header as any,
           config: {
             placeholder: "Enter a title",
             levels: [1, 2, 3, 4, 5, 6],
@@ -118,7 +118,7 @@ const Document = ({
         .save()
         .then((outputData) => {
           updateDocument({
-            _id: fileId,
+            _id: fileId as any,
             document: JSON.stringify(outputData),
           })
             .then(() => {
