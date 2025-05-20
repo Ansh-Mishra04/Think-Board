@@ -18,15 +18,15 @@ const Header = () => {
         <nav aria-label="Global">
           <ul className="flex items-center gap-6 text-sm">
             <li>
-              <a className="text-gray-500 transition hover:text-cyan-600/75" href="#"> Home </a>
+              <a className="text-gray-500 transition hover:text-cyan-600/75" href="/"> Home </a>
             </li>
 
             <li>
-              <a className="text-gray-500 transition hover:text-cyan-600/75" href="#"> Canvas </a>
+              <a className="text-gray-500 transition hover:text-cyan-600/75" href="/dashboard"> Canvas </a>
             </li>
 
             <li>
-              <a className="text-gray-500 transition hover:text-cyan-600/75" href="#"> Pricing </a>
+              <a className="text-gray-500 transition hover:text-cyan-600/75" href="/dashboard"> Pricing </a>
             </li>
 
             <li>
