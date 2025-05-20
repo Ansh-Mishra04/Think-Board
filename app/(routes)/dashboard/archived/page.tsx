@@ -37,7 +37,7 @@ import { useDashboardData } from "@/contexts/ActiveTeamContext";
 import Constant from "@/app/_constants/Constant";
 import Header from "../_components/header";
 
-const FileList = () => {
+const page = () => {
   const {  activeTeam, refreshData,loading } = useDashboardData(); 
   const [files, setFiles] = useState<any>();
   const { user } = useKindeBrowserClient();
@@ -153,8 +153,8 @@ const handleDelete = async(fileId:any) => {
               <TableRow key={file._id} 
               >
                 <TableCell 
-                className="cursor-pointer"
-                onClick={() => router.push(`/workspace/${file._id}`)}
+                // className="cursor-pointer"
+                // onClick={() => router.push(`/workspace/${file._id}`)}
 
                 >{file.name}</TableCell>
                 <TableCell className="text-center">{file.createdBy}</TableCell>
@@ -223,4 +223,4 @@ const handleDelete = async(fileId:any) => {
   );
 };
 
-export default FileList;
+export default page;

@@ -89,7 +89,7 @@ const LowerSidebar = () => {
     {
       id: 3,
       name: "Archive",
-      path: "/archived",
+      path: "/dashboard/archived",
       icon: ArchiveIcon,
     },
   ];
