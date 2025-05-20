@@ -82,3 +82,13 @@ export const deleteFile = mutation({
         return result;
     }
 })
+
+export const archived = query({
+    args: {
+        email: v.string(),
+    },
+    handler: async (ctx,args) => {
+        const result = await ctx.db.query("file").filter((q) => q.eq(q.field("createdBy"), args.email)).filter((q) => q.eq(q.field("archive"), true)).collect();
+        return result;
+    }
+})

@@ -136,6 +136,9 @@ const UpperSidebar = () => {
         <Button
           className="w-full justify-start gap-4 font-bold bg-gray-100 cursor-pointer border border-white hover:border-black hover:text-cyan-800"
           variant="outline"
+          onClick={()=>
+          {router.push("/dashboard")}
+          }
         >
           <LayoutGrid />
           All Files <Files className="ml-auto" />

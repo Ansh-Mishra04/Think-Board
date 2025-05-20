@@ -141,6 +141,9 @@ const LowerSidebar = () => {
           <div
             key={menu.id}
             className="flex flex-row items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer text-sm rounded-lg"
+            onClick={() => {
+              if (menu.path) window.location.href = menu.path;
+            }}
           >
             <menu.icon size={20} />
             <div>{menu.name}</div>

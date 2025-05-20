@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+'use client';
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -22,7 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CircleFadingPlus, MoreHorizontal, ArchiveIcon, Eraser, UsersRound } from "lucide-react";
+import { CircleFadingPlus, MoreHorizontal, ArchiveIcon, Eraser, UsersRound, ArchiveX, ArchiveRestore } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,17 +31,32 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useConvex, useMutation } from "convex/react";
+import { useConvex, useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useDashboardData } from "@/contexts/ActiveTeamContext"; 
 import Constant from "@/app/_constants/Constant";
+import Header from "../_components/header";
 
 const FileList = () => {
-  const { files, activeTeam, refreshData,loading } = useDashboardData(); 
+  const {  activeTeam, refreshData,loading } = useDashboardData(); 
+  const [files, setFiles] = useState<any>();
   const { user } = useKindeBrowserClient();
   const createFile = useMutation(api.files.createFile);
   const [fileName, setFileName] = useState("");
   const router = useRouter();
+
+
+    const archivedFiles = async () => {
+      const result = await convex.query(api.files.archived, {
+        email: user?.email!
+      });
+      setFiles(result);
+      console.log(result);
+    };
+
+    useEffect(() => {
+      user&&archivedFiles();
+    },[user]);
   // Function to create a file
   const fileCreate = async (name: string) => {
     if (!activeTeam) {
@@ -90,12 +106,12 @@ const deleteFile =useMutation(api.files.deleteFile);
 const handleArchive = async (fileId: any) => {
   archiveFile({
     _id: fileId,
-    archive: true
+    archive: false
   }).then(() => {
-    toast.success("File Archived Successfully");
+    toast.success("File Restored Successfully");
     refreshData();
   }).catch((e) => {
-    toast.error("An error occurred while archiving");
+    toast.error("An error occurred while restoring");
     console.error(e);
   });
 } 
@@ -114,53 +130,11 @@ const handleDelete = async(fileId:any) => {
 
   return (
     <>
-      <div className="flex justify-start gap-6">
-        {/* Create File Dialog */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <div className="flex flex-col border-2 border-dashed border-gray-500 min-w-[200px] hover:border-gray-800 hover:shadow-lg w-[17vw] h-[15vh] cursor-pointer rounded-3xl bg-gray-100 justify-center items-center mb-5">
-              <CircleFadingPlus className="w-5 h-5" />
-              New File
-            </div>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create New File</DialogTitle>
-              <DialogDescription>
-                <p>Give your file a unique name</p>
-              </DialogDescription>
-              <Input
-                placeholder="Enter File Name"
-                className="my-5"
-                value={fileName}
-                onChange={(e) => setFileName(e.target.value)}
-              />
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <div className="flex w-full">
-                  <Button
-                    className="bg-cyan-600 text-white hover:bg-cyan-700 justify-center cursor-pointer"
-                    disabled={fileName.length < 4}
-                    onClick={() => fileCreate(fileName)}
-                  >
-                    Add File
-                  </Button>
-                </div>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Create Team Button */}
-        <div
-          className="flex flex-col border-2 border-dashed border-gray-500 min-w-[200px] hover:border-gray-800 hover:shadow-lg w-[17vw] h-[15vh] cursor-pointer rounded-3xl bg-gray-100 justify-center items-center mb-5"
-          onClick={() => router.push("/teams/create")}
-        >
-          <UsersRound className="w-5 h-5" />
-          Create Team
-        </div>
-      </div>
+    
+    <div className="flex justify-end">
+        <Header /> 
+    </div>
+ 
 
       {/* Files Table */}
       <div className="overflow-x-auto">
@@ -193,7 +167,7 @@ const handleDelete = async(fileId:any) => {
                     <DropdownMenuContent>
                       {/* Archive and Delete options */}
                       <DropdownMenuItem onClick={() => handleArchive(file._id)}>
-                        <ArchiveIcon className="w-4 h-4 mr-2" /> Archive
+                        <ArchiveRestore className="w-4 h-4 mr-2" /> Restore
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleDelete(file._id)}>
                         <Eraser className="w-4 h-4 mr-2 text-red-500" /> Delete

@@ -21,10 +21,10 @@ const Header = () => {
     const {user}:any=useKindeBrowserClient();
   return (
     <div className='flex gap-4 items-center'>
-        <div className='flex gap-2 items-center border border-gray-300 px-2 py-1 rounded-md'>
+        {/* <div className='flex gap-2 items-center border border-gray-300 px-2 py-1 rounded-md'>
             <Search className='w-4 h-4 rounded-full' />
             <input type="text" placeholder='Search' className='bg-transparent outline-none  rounded-md px-2 py-1 text-sm placeholder:text-gray-400' />
-        </div>
+        </div> */}
         <div className=''>
             <Image src={user?.picture} alt="avatar" width={25} height={25} className=' rounded-full' />
         </div>
