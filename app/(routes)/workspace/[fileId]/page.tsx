@@ -159,7 +159,9 @@ const WorkSpace = ({ params }: any) => {
                 style={{ width: "100%" }}
                 className="h-full "
               >
-                <ExcalidrawClient />
+                  <ExcalidrawClient onSaveTrigger={save} onSaveHandled={() => setSave(false)}
+                  fileId={params.fileId}
+                  fileData={fileData}/>
                 {/* <div className="excalidraw-container">
                   <Excalidraw />
                 </div> */}
