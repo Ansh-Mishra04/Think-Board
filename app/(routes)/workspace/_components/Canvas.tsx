@@ -55,12 +55,11 @@ export default function Canvas({
     setCanvas(elements);
   };
 
-  // Avoid rendering until canvas is loaded
-  if (canvas === null) return <div>Loading canvas...</div>;
+  
 
   return (
     <div className="w-full h-full">
-      <Excalidraw
+      { fileData &&<Excalidraw
         onChange={handleChange}
         initialData={{
           elements: canvas,
@@ -93,7 +92,37 @@ export default function Canvas({
             Github
           </MainMenu.Item>
         </MainMenu>
-      </Excalidraw>
+        <WelcomeScreen>
+          <WelcomeScreen.Center>
+            <WelcomeScreen.Center.Logo>
+              <img
+                src="https://i.ibb.co/vCmPKKGF/logo1.png"
+                alt="logo"
+                width={120}
+              />
+            </WelcomeScreen.Center.Logo>
+            <WelcomeScreen.Center.Heading>
+              Welcome to Think Board!
+            </WelcomeScreen.Center.Heading>
+            <WelcomeScreen.Center.Menu>
+              <WelcomeScreen.Center.MenuItemLink
+                href="https://github.com/Ansh-Mishra04/Think-Board"
+                icon={<Github width={16} />}
+                shortcut={"⌘G"}
+              >
+                Think-Board GitHub
+              </WelcomeScreen.Center.MenuItemLink>
+              <WelcomeScreen.Center.MenuItemHelp />
+            </WelcomeScreen.Center.Menu>
+          </WelcomeScreen.Center>
+          <WelcomeScreen.Hints.ToolbarHint>
+            <p> ToolBar Hints </p>
+          </WelcomeScreen.Hints.ToolbarHint>
+          <WelcomeScreen.Hints.MenuHint />
+          <WelcomeScreen.Hints.HelpHint />
+        </WelcomeScreen>
+
+      </Excalidraw>}
     </div>
   );
 }

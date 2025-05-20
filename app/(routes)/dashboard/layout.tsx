@@ -29,7 +29,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <DashboardDataProvider> {/* Provide context ABOVE sidebars */}
+    <DashboardDataProvider> 
       <div className="flex h-full min-h-screen">
         {/* Sidebar */}
         <div className="flex flex-col justify-between bg-[#a9daff] p-4 h-screen w-64  top-0 z-10 border border-gray-300 ">

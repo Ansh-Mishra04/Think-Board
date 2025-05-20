@@ -30,13 +30,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useMutation } from "convex/react";
+import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useDashboardData } from "@/contexts/ActiveTeamContext"; // ✅ use your context
 import Constant from "@/app/_constants/Constant";
 
 const FileList = () => {
-  const { files, activeTeam, refreshData } = useDashboardData(); // ✅ use context values
+  const { files, activeTeam, refreshData,loading } = useDashboardData(); // ✅ use context values
   const { user } = useKindeBrowserClient();
   const createFile = useMutation(api.files.createFile);
   const [fileName, setFileName] = useState("");
@@ -62,8 +62,8 @@ const FileList = () => {
         archive:false
       });
       toast.success("File Created Successfully");
-      refreshData(); // ✅ Refresh files list after creating
-      setFileName(""); // Optional: clear input
+      refreshData(); 
+      setFileName("");
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -84,6 +84,33 @@ const FileList = () => {
     if (minutes >= 1) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
     return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
   };
+  const convex = useConvex();
+const archiveFile =useMutation(api.files.archiveFile);
+const deleteFile =useMutation(api.files.deleteFile);
+const handleArchive = async (fileId: any) => {
+  archiveFile({
+    _id: fileId,
+    archive: true
+  }).then(() => {
+    toast.success("File Archived Successfully");
+    refreshData();
+  }).catch((e) => {
+    toast.error("An error occurred while archiving");
+    console.error(e);
+  });
+} 
+
+const handleDelete = async(fileId:any) => {
+  deleteFile({
+    _id: fileId
+  }).then(() => {
+    toast.success("File Deleted Successfully");
+    refreshData();
+  }).catch((e) => {
+    toast.error("An error occurred while deleting");
+    console.error(e);
+  });
+}
 
   return (
     <>
@@ -138,7 +165,7 @@ const FileList = () => {
       {/* Files Table */}
       <div className="overflow-x-auto">
         <Table>
-          <TableCaption>A list of your recent files.</TableCaption>
+          <TableCaption>List of Files from {activeTeam?.name}</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[40%]">File Name</TableHead>
@@ -149,23 +176,26 @@ const FileList = () => {
           </TableHeader>
           <TableBody>
             {files?.map((file: any) => (
-              <TableRow key={file._id} className="cursor-pointer"
-              onClick={() => router.push(`/workspace/${file._id}`)}
+              <TableRow key={file._id} 
               >
-                <TableCell>{file.name}</TableCell>
+                <TableCell 
+                className="cursor-pointer"
+                onClick={() => router.push(`/workspace/${file._id}`)}
+
+                >{file.name}</TableCell>
                 <TableCell className="text-center">{file.createdBy}</TableCell>
                 <TableCell>{getTimeAgo(file._creationTime)}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger>
-                      <MoreHorizontal className="text-gray-700 w-4 h-4 cursor-pointer" />
+                      <MoreHorizontal className="text-gray-700 w-4 h-4 cursor-pointer  hover:scale-120 hover:text-cyan-500" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {/* Archive and Delete options */}
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleArchive(file._id)}>
                         <ArchiveIcon className="w-4 h-4 mr-2" /> Archive
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDelete(file._id)}>
                         <Eraser className="w-4 h-4 mr-2 text-red-500" /> Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -173,7 +203,7 @@ const FileList = () => {
                 </TableCell>
               </TableRow>
             ))}
-            {files?.length === 0 && (
+            {loading&& (
               <TableRow>
                 <TableCell colSpan={4} className="text-center">
                   <div className=" p-4">
@@ -202,6 +232,13 @@ const FileList = () => {
     </div>
   </div>
 </div>
+                </TableCell>
+              </TableRow>
+            )}
+            {files.length === 0&& (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center">
+                  <strong className="text-gray-400">No Files Found</strong>
                 </TableCell>
               </TableRow>
             )}

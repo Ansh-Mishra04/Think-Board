@@ -6,7 +6,7 @@ export const getFiles = query({
         teamId:v.string()
     },
     handler: async (ctx, args) => {
-       const result = await ctx.db.query("file").filter((q) => q.eq(q.field("teamId"), args.teamId))
+       const result = await ctx.db.query("file").filter((q) => q.eq(q.field("teamId"), args.teamId)).filter((q) => q.eq(q.field("archive"), false))
        .order('desc')
        .collect();
         return result;
@@ -58,6 +58,27 @@ export const getFileById = query({
     },
     handler: async (ctx, args) => {
         const result = await ctx.db.get(args._id);
+        return result;
+    }
+})
+
+export const archiveFile = mutation({
+    args: {
+        _id: v.id("file"),
+        archive: v.boolean(),
+    },
+    handler: async (ctx, args) => {
+        const result = await ctx.db.patch(args._id, { archive: args.archive });
+        return result;
+    }
+})
+
+export const deleteFile = mutation({
+    args: {
+        _id: v.id("file"),
+    },
+    handler: async (ctx, args) => {
+        const result = await ctx.db.delete(args._id);
         return result;
     }
 })

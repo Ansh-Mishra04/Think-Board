@@ -9,10 +9,10 @@ import {
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@/components/ui/button";
-import { Link2, Save } from "lucide-react";
+import { ArchiveIcon, Copy, LayoutDashboard, Link2, MoreHorizontal, Save } from "lucide-react";
 import Document from "../_components/Document";
 import Canvas from "../_components/Canvas";
-import { useConvex } from "convex/react";
+import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import dynamic from "next/dynamic";
@@ -23,6 +23,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { toast } from "sonner";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 
 const  ExcalidrawClient = dynamic(() => import("../_components/Canvas"), {
@@ -37,6 +39,7 @@ const WorkSpace = ({ params }: any) => {
       toast.success("Copied to clipboard");
     })
   }
+  const router = useRouter();
   const [layout, setLayout] = useState("both");
   const { user }: any = useKindeBrowserClient();
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
@@ -66,31 +69,59 @@ const WorkSpace = ({ params }: any) => {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-300 shadow-2xl p-2 bg-[#c5e7ff]">
+      <div className="flex items-center justify-between border-b-2 border-gray-300 shadow-2xl p-2 bg-[#E5f4f9]">
         <div className="flex items-center gap-3">
+          <a href="/dashboard">
           <Image src="/logo1.png" alt="logo" width={40} height={40} />
-          <h2 className="text-lg font-bold">{fileData?.name}</h2>
+          </a>
+          <h2 className="text-lg font-bold text-gray-600">{fileData?.name || "Untitled"}</h2>
+          <div className="flex justify-center items-center">
+            <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <MoreHorizontal className="text-gray-700 w-4 h-4 cursor-pointer" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => {router.push("/dashboard")}}>
+                        <LayoutDashboard className="w-4 h-4 mr-2 font-medium" /> Dashboard
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+          </div>
         </div>
         <div className="flex items-center rounded bg-white">
-          <span
-            className="border hover:bg-cyan-100 border-gray-500 px-2 py-1 text-[14px] rounded-l cursor-pointer font-medium min-w-20 text-center"
-            onClick={() => setLayout("document")}
-          >
-            Document
-          </span>
-          <span
-            className="border hover:bg-cyan-100 border-gray-500 px-2 py-1 text-[14px] cursor-pointer font-medium min-w-20 text-center"
-            onClick={() => setLayout("both")}
-          >
-            Both
-          </span>
-          <span
-            className="border hover:bg-cyan-100 border-gray-500 px-2 py-1 text-[14px] rounded-r cursor-pointer font-medium min-w-20 text-center"
-            onClick={() => setLayout("canvas")}
-          >
-            Canvas
-          </span>
-        </div>
+      <span
+        className={`border px-2 py-1 text-[14px] rounded-l cursor-pointer font-medium min-w-20 text-center ${
+          layout === "document"            
+            ? "bg-cyan-700 text-white" 
+
+            : "border-gray-200 hover:bg-cyan-100"
+        }`}
+        onClick={() => setLayout("document")}
+      >
+        Document
+      </span>
+      <span
+        className={`border px-2 py-1 text-[14px] cursor-pointer font-medium min-w-20 text-center ${
+          layout === "both"
+            ? "bg-cyan-700 text-white" 
+            : "border-gray-200 hover:bg-cyan-100"
+        }`}
+        onClick={() => setLayout("both")}
+      >
+        Both
+      </span>
+      <span
+        className={`border px-2 py-1 text-[14px] rounded-r cursor-pointer font-medium min-w-20 text-center ${
+          layout === "canvas"
+            ? "bg-cyan-700 text-white" 
+
+            : "border-gray-200 hover:bg-cyan-100"
+        }`}
+        onClick={() => setLayout("canvas")}
+      >
+        Canvas
+      </span>
+    </div>
         <div className="flex items-center gap-6 mr-3">
           <Button
             className="text-[12px] bg-gray-600 hover:bg-gray-700 cursor-pointer h-8"
@@ -98,11 +129,25 @@ const WorkSpace = ({ params }: any) => {
           >
             Save <Save />
           </Button>
-          <Button className="text-[12px] bg-cyan-600 hover:bg-cyan-700 cursor-pointer h-8"
+          
+
+            <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Button className="text-[12px] bg-cyan-600 hover:bg-cyan-700 cursor-pointer h-8"
           onClick={copyToClipboard}
           >
             Share <Link2 />
           </Button>
+
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {/* Archive and Delete options */}
+                      <DropdownMenuItem>
+                            <input type="text" value={window.location.href} className="w-full" disabled/>
+                            <Button className="text-[12px] bg-cyan-600 hover:bg-cyan-700 cursor-pointer h-8" onClick={copyToClipboard}><Copy className="text-white" /></Button>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
         </div>
       </div>
 
@@ -113,8 +158,9 @@ const WorkSpace = ({ params }: any) => {
             <>
               <ResizablePanel
                 minSize={20}
-                className="h-full "
+                className="h-full bg-[#E5F4FF]"
                 defaultSize={30}
+                
               >
                 <Document
                   onSaveTrigger={save}
@@ -123,8 +169,10 @@ const WorkSpace = ({ params }: any) => {
                   fileData={fileData}
                 />
               </ResizablePanel>
-              <ResizableHandle  />
-              <ResizablePanel minSize={20} className="h-full border-l bg-[#E5F4FF]">
+              <ResizableHandle  withHandle className="bg-gray-400 w-0.5" />
+              <ResizablePanel minSize={20} 
+              className="h-full bg-[#E5F4FF]"
+              >
                 <ExcalidrawClient onSaveTrigger={save} onSaveHandled={() => setSave(false)}
                   fileId={params.fileId}
                   fileData={fileData}/>
@@ -140,7 +188,7 @@ const WorkSpace = ({ params }: any) => {
               <ResizablePanel
                 minSize={100}
                 style={{ width: "100%" }}
-                className="h-full "
+                className="h-full"
               >
                 <Document
                   onSaveTrigger={save}

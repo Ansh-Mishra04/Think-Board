@@ -83,13 +83,13 @@ const LowerSidebar = () => {
     {
       id: 2,
       name: "Github",
-      path: "/",
+      path: "https://github.com/Ansh-Mishra04/Think-Board",
       icon: Github,
     },
     {
       id: 3,
       name: "Archive",
-      path: "/",
+      path: "/archived",
       icon: ArchiveIcon,
     },
   ];
