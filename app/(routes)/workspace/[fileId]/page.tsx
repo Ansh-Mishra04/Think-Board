@@ -16,11 +16,27 @@ import { useConvex } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import dynamic from "next/dynamic";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { toast } from "sonner";
+
+
 const  ExcalidrawClient = dynamic(() => import("../_components/Canvas"), {
   ssr: false,
 });
 
+
 const WorkSpace = ({ params }: any) => {
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast.success("Copied to clipboard");
+    })
+  }
   const [layout, setLayout] = useState("both");
   const { user }: any = useKindeBrowserClient();
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
@@ -82,7 +98,9 @@ const WorkSpace = ({ params }: any) => {
           >
             Save <Save />
           </Button>
-          <Button className="text-[12px] bg-cyan-600 hover:bg-cyan-700 cursor-pointer h-8">
+          <Button className="text-[12px] bg-cyan-600 hover:bg-cyan-700 cursor-pointer h-8"
+          onClick={copyToClipboard}
+          >
             Share <Link2 />
           </Button>
         </div>

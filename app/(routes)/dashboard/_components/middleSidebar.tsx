@@ -18,7 +18,29 @@ const MiddleSidebar = () => {
     }
   }, [files]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><div id="dropdown-cta" className="p-4 mt-6 rounded-lg bg-gray-200" role="alert" aria-busy="true">
+  <div className="flex items-center mb-3">
+    <span className="bg-gray-300 text-transparent text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm flex gap-2 animate-pulse">
+      <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+      <div className="w-12 h-4 bg-gray-300 rounded"></div>
+    </span>
+  </div>
+  <p className="mb-3 text-sm text-gray-300 animate-pulse">
+    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+  </p>
+  <a className="text-sm text-gray-300 underline font-medium animate-pulse" href="#">
+    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+  </a>
+  <div className="h-3 w-full bg-gray-300 rounded-full mt-5">
+    <div className="h-3 bg-gray-400 rounded-full" ></div>
+  </div>
+  <p className="text-sm ml-1 text-gray-300 my-2 animate-pulse">
+    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+  </p>
+  <button className="w-full bg-gray-300 rounded h-10 animate-pulse">
+    <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+  </button>
+</div></div>;
 
   if (!activeTeam) {
     return <div className="p-4 text-sm text-gray-600">No team selected.</div>;

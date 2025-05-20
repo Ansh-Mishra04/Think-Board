@@ -176,7 +176,32 @@ const FileList = () => {
             {files?.length === 0 && (
               <TableRow>
                 <TableCell colSpan={4} className="text-center">
-                  No Files Found
+                  <div className=" p-4">
+  <div className="animate-pulse">
+    <div className="flex cursor-pointer py-2">
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 text-center bg-gray-200 h-6 rounded-md mx-2"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+    </div>
+  </div>
+  <div className="animate-pulse">
+    <div className="flex cursor-pointer py-2">
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 text-center bg-gray-200 h-6 rounded-md mx-2"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+    </div>
+  </div>
+  <div className="animate-pulse">
+    <div className="flex cursor-pointer py-2">
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 text-center bg-gray-200 h-6 rounded-md mx-2"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+      <div className="flex-1 bg-gray-200 h-6 rounded-md"></div>
+    </div>
+  </div>
+</div>
                 </TableCell>
               </TableRow>
             )}
