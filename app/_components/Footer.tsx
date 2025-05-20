@@ -194,16 +194,13 @@ const Footer = () => {
 
     <div className="mt-16 border-t border-gray-300 pt-8">
       <p className="text-center text-xs/relaxed text-gray-500">
-        © Company 2022. All rights reserved.
+        © Company 2025. All rights reserved.
 
         <br />
 
-        Created with
-        <a href="#" className="text-gray-700 underline transition hover:text-gray-700/75">Laravel</a>
-        and
-        <a href="#" className="text-gray-700 underline transition hover:text-gray-700/75"
-          >Laravel Livewire</a
-        >.
+        Created by - 
+        <a href="https://www.linkedin.com/in/ansh-mishraa/" className="text-gray-700 underline transition hover:text-gray-700/75"> Ansh Mishra</a>
+       
       </p>
     </div>
   </div>
