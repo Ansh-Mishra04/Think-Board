@@ -32,11 +32,11 @@ import {
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useDashboardData } from "@/contexts/ActiveTeamContext"; // ✅ use your context
+import { useDashboardData } from "@/contexts/ActiveTeamContext"; 
 import Constant from "@/app/_constants/Constant";
 
 const FileList = () => {
-  const { files, activeTeam, refreshData,loading } = useDashboardData(); // ✅ use context values
+  const { files, activeTeam, refreshData,loading } = useDashboardData(); 
   const { user } = useKindeBrowserClient();
   const createFile = useMutation(api.files.createFile);
   const [fileName, setFileName] = useState("");

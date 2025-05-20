@@ -18,7 +18,8 @@ export const createUser=mutation({
     args:{
         name:v.string(),
         email:v.string(),
-        image:v.string()
+        image:v.string(),
+        fileLimit:v.number()
     },
     handler:async (ctx,args)=>{
         const user = await ctx.db.insert('user',args)

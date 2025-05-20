@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Documentation = () => {
+const Pricing = () => {
   return (
 <div className='border-t border-gray-200 pt-5'>
   <strong class="block text-center text-2xl font-bold text-gray-900 sm:text-3xl">
@@ -374,4 +374,4 @@ const Documentation = () => {
   )
 }
 
-export default Documentation
+export default Pricing

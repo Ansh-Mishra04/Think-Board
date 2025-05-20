@@ -8,6 +8,7 @@ import FileList from './_components/fileList';
 import Header from './_components/header';
 import { useDashboardData } from '@/contexts/ActiveTeamContext';
 import { api } from '@/convex/_generated/api';
+import Constant from '@/app/_constants/Constant';
 
 const Dashboard = () => {
   const convex = useConvex();
@@ -26,6 +27,7 @@ const Dashboard = () => {
         name: user.given_name,
         email: user.email,
         image: user.picture,
+        fileLimit: Constant.MAX_FREE_COUNTS,
       });
     }
   };
@@ -36,7 +38,7 @@ const Dashboard = () => {
         <Header />
       </div>
       <div className="mt-5 p-5">
-        <FileList /> {/* ✅ Context-based, no need to pass props */}
+        <FileList /> 
       </div>
     </div>
   );
