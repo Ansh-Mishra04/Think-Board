@@ -58,7 +58,7 @@ export default function Canvas({
   
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full custom-styles">
       { fileData &&<Excalidraw
         onChange={handleChange}
         initialData={{

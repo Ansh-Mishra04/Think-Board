@@ -32,11 +32,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <DashboardDataProvider> 
       <div className="flex h-full min-h-screen">
         {/* Sidebar */}
-        <div className="flex flex-col justify-between bg-[#a9daff] p-4 h-screen w-64  top-0 z-10 border border-gray-300 ">
-          <UpperSidebar />
-          <MiddleSidebar />
-          <LowerSidebar />
-        </div>
+       <div className="hidden md:flex flex-col justify-between bg-[#a9daff] p-4 h-screen w-64 top-0 z-10 border border-gray-300">
+  <UpperSidebar />
+  <MiddleSidebar />
+  <LowerSidebar />
+</div>
+
 
         {/* Main Content */}
         <div className="flex-1 bg-[#E5F4FF] p-4 overflow-auto">
