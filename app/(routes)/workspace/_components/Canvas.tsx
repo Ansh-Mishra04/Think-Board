@@ -34,7 +34,7 @@ export default function Canvas({onSaveTrigger, onSaveHandled, fileData, fileId}:
         }
       }
     initialData={{
-          elements: fileData ?  JSON.parse(fileData.canvas) : [],
+          elements: fileData?.canvas&&JSON.parse(fileData.canvas),
           appState: { zenModeEnabled: false, viewBackgroundColor: "#E5F4FF" },
           scrollToContent: true
         }}
