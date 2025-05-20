@@ -79,10 +79,12 @@ export default function Canvas({
         }}
       >
         <MainMenu>
-          <MainMenu.DefaultItems.ClearCanvas />
-          <MainMenu.DefaultItems.Help />
-          <MainMenu.DefaultItems.SaveAsImage />
+          {/* <MainMenu.DefaultItems.ClearCanvas /> */}
           <MainMenu.DefaultItems.SearchMenu />
+          <MainMenu.DefaultItems.SaveAsImage />
+          <MainMenu.DefaultItems.Help />
+          <MainMenu.DefaultItems.ChangeCanvasBackground />
+          <MainMenu.Separator />
           <MainMenu.Item
             onClick={() =>
               window.open("https://github.com/Ansh-Mishra04/draw-tools")
